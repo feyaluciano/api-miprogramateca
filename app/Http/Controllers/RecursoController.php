@@ -111,7 +111,7 @@ class RecursoController extends Controller
 		//$recursos = Recurso::where('IdRecurso', '>', '1');
 		
 		$search="a";
-		$recursos = Recurso::with('tiporecurso')->orderBy('fechaCreacion','desc')
+		$recursos = Recurso::with('tiporecurso')->where('FechaBaja', '=',null)->orderBy('fechaCreacion','desc')
                 ->paginate(10);		  	
         foreach($recursos as $recu) {			
             $recu->Titulo = utf8_decode($recu->Titulo);
@@ -152,7 +152,7 @@ class RecursoController extends Controller
 		$recurso->IdTipoRecurso = $request->IdTipoRecurso;
 		$recurso->Activo = $request->Activo;
         $recurso->Oculto = $request->Oculto;
-        $recurso->Oculto = null;
+       
         //Guardamos el cambio en nuestro modelo
         if ($recurso->save()) {
 			return response()->json(array('success' => true, 'last_insert_id' => $recurso->IdRecurso), 200);			
@@ -226,13 +226,8 @@ class RecursoController extends Controller
 
 
               $totalE=($cantidadPorPagina*$page)  + $cantidadPorPagina;
-              //if ( $totalE >= $cantidad   ) {    
-                $recursos=$recursos->orderBy('fechaCreacion','desc')->skip($cantidadPorPagina*$page)->take($cantidadPorPagina)->get();
-             // }
-    
-    
-    //$cantidad = Recurso::where('FechaBaja', '=',null)->where('Titulo', 'like','%'.$buscar.'%')->get()->count();
-    //->orderBy('fechaCreacion','desc')->skip($cantidadPorPagina*$page)->take($cantidadPorPagina)->get()
+  
+                $recursos=$recursos->orderBy('fechaCreacion','desc')->skip($cantidadPorPagina*$page)->take($cantidadPorPagina)->get();            
     }
     
 

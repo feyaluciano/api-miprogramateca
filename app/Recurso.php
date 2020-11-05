@@ -21,6 +21,7 @@ protected  $fillable =[
         'Recomendado',
         'IdTipoRecurso',
         'Activo',
+        'Oculto',
         'FechaCreacion',
         'FechaBaja',
         'created_at',
